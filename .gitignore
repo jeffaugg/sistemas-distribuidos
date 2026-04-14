@@ -1,0 +1,27 @@
+# Build outputs
+out/
+target/
+build/
+
+# Java artifacts
+*.class
+*.jar
+*.war
+*.ear
+*.log
+
+# Maven wrapper cache
+.mvn/wrapper/maven-wrapper.jar
+
+# IDE/editor files
+.idea/
+*.iml
+.vscode/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.swp
