@@ -3,6 +3,7 @@ package br.edu.ufc.quixada.sd.t1.stream;
 import br.edu.ufc.quixada.sd.t1.domain.computadores.Computer;
 
 import java.io.IOException;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -19,7 +20,8 @@ public final class ComputerStreamTcpServer {
         String mode = args[0].toLowerCase();
         int port = Integer.parseInt(args[1]);
 
-        try (ServerSocket serverSocket = new ServerSocket(port)) {
+        InetAddress bindAddress = InetAddress.getByName("0.0.0.0");
+        try (ServerSocket serverSocket = new ServerSocket(port, 50, bindAddress)) {
             System.out.println("Servidor de stream aguardando conexão na porta " + port + "...");
             try (Socket socket = serverSocket.accept()) {
                 if ("send".equals(mode)) {
