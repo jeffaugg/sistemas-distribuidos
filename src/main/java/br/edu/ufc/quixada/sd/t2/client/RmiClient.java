@@ -22,9 +22,7 @@ public class RmiClient {
         String host  = args.length > 0 ? args[0] : "localhost";
         int    porta = args.length > 1 ? Integer.parseInt(args[1]) : 1099;
 
-        System.out.println("╔══════════════════════════════════════════╗");
-        System.out.println("║       Cliente RMI - Trabalho 2           ║");
-        System.out.println("╚══════════════════════════════════════════╝");
+        System.out.println("Cliente RMI");
 
         // RemoteObjectRef: "onde encontrar" o objeto remoto
         RemoteObjectRef ref = new RemoteObjectRef("ComputerService", host, porta);
@@ -32,26 +30,20 @@ public class RmiClient {
 
         RequestReplyProtocol protocolo = new RequestReplyProtocol();
 
-        // =====================================================================
         // Operação 1 — listarComputadores
-        // =====================================================================
         secao("1. Listar todos os computadores");
         byte[] resultado = protocolo.doOperation(ref, "listarComputadores", new byte[0]);
         System.out.println("Resultado JSON (" + resultado.length + " bytes):");
         System.out.println(new String(resultado, StandardCharsets.UTF_8));
 
-        // =====================================================================
         // Operação 2 — buscarPorCodigo
-        // =====================================================================
         secao("2. Buscar computador por código: NB-001");
         String codigo = "NB-001";
         resultado = protocolo.doOperation(ref, "buscarPorCodigo",
                 codigo.getBytes(StandardCharsets.UTF_8));
         System.out.println("Encontrado: " + new String(resultado, StandardCharsets.UTF_8));
 
-        // =====================================================================
         // Operação 3 — adicionarComputador (PASSAGEM POR VALOR via JSON)
-        // =====================================================================
         secao("3. Adicionar novo computador (passagem por valor + JSON)");
         Notebook novoNotebook = new Notebook("NB-999", "Samsung", "Galaxy Book3", 16, 512, 5200.00);
 
@@ -68,16 +60,12 @@ public class RmiClient {
                 "NB-999".getBytes(StandardCharsets.UTF_8));
         System.out.println("Verificação — encontrado: " + new String(resultado, StandardCharsets.UTF_8));
 
-        // =====================================================================
         // Operação 4 — contarPorCategoria
-        // =====================================================================
         secao("4. Contar computadores por categoria");
         resultado = protocolo.doOperation(ref, "contarPorCategoria", new byte[0]);
         System.out.println("Contagem por categoria: " + new String(resultado, StandardCharsets.UTF_8));
 
-        // =====================================================================
         // Operação 5 — removerComputador
-        // =====================================================================
         secao("5. Remover computador: NB-999");
         resultado = protocolo.doOperation(ref, "removerComputador",
                 "NB-999".getBytes(StandardCharsets.UTF_8));

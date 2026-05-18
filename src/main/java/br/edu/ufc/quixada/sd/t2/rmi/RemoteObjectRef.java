@@ -2,12 +2,6 @@ package br.edu.ufc.quixada.sd.t2.rmi;
 
 /**
  * Referência a um objeto remoto.
- *
- * Contém as informações necessárias para localizar um objeto no servidor:
- * nome do objeto no registro RMI, endereço do host e porta.
- *
- * Analogia: é como o endereço de uma casa. Você não tem a casa na mão,
- * mas sabe onde encontrá-la.
  */
 public class RemoteObjectRef {
     private final String objectName;

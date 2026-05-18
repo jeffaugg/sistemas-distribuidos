@@ -9,17 +9,6 @@ import java.util.Map;
 
 /**
  * Interface do serviço remoto de computadores.
- *
- * Toda interface RMI deve estender java.rmi.Remote.
- * Todo método deve declarar throws RemoteException, pois
- * qualquer chamada remota pode falhar por problemas de rede.
- *
- * Métodos remotos disponíveis (mínimo 4 exigido):
- *   1. listarComputadores   – retorna todos os computadores do estoque
- *   2. buscarPorCodigo      – busca um computador pelo código
- *   3. adicionarComputador  – adiciona um computador via JSON (passagem por valor)
- *   4. contarPorCategoria   – retorna a contagem agrupada por categoria
- *   5. removerComputador    – remove um computador pelo código
  */
 public interface IComputerService extends Remote {
 
@@ -32,7 +21,6 @@ public interface IComputerService extends Remote {
     /**
      * Adiciona um novo computador ao estoque.
      * O parâmetro é o objeto Computer serializado em JSON (representação externa de dados).
-     * Isso demonstra a PASSAGEM POR VALOR com representação externa.
      */
     void adicionarComputador(byte[] computerJson) throws RemoteException;
 

@@ -11,32 +11,17 @@ import java.rmi.Naming;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * Implementa o protocolo Requisição-Resposta descrito na seção 5.2 do livro Coulouris.
- *
- * ┌────────────┐         REQUISIÇÃO          ┌────────────┐
- * │  CLIENTE   │ ──────────────────────────► │  SERVIDOR  │
- * │            │                             │            │
- * │doOperation │                             │ getRequest │
- * │  (espera)  │                             │  execute   │
- * │            │ ◄────────────────────────── │ sendReply  │
- * │(continua)  │         RESPOSTA            │            │
- * └────────────┘                             └────────────┘
- *
  * Métodos:
  *   - doOperation  → usado pelo CLIENTE para invocar um método remoto
  *   - getRequest   → usado pelo SERVIDOR ao receber uma requisição
  *   - sendReply    → usado pelo SERVIDOR ao enviar a resposta
  *
- * No Java RMI, o transporte de rede é gerenciado automaticamente pelo framework.
- * Os três métodos aqui tornam explícito o fluxo do protocolo que acontece por baixo.
  */
 public class RequestReplyProtocol {
 
     private final AtomicInteger idCounter = new AtomicInteger(0);
 
-    // =========================================================================
     // LADO CLIENTE
-    // =========================================================================
 
     /**
      * Envia uma mensagem de requisição para o objeto remoto e retorna a resposta.
@@ -59,13 +44,11 @@ public class RequestReplyProtocol {
         System.out.println("\n[CLIENTE → SERVIDOR] " + request);
 
         // 2. Localiza o objeto remoto no Registro RMI (PASSAGEM POR REFERÊNCIA)
-        //    O objeto real está no servidor. O cliente recebe apenas um STUB (procurador),
-        //    que é uma referência remota — não uma cópia do objeto.
+        //    O objeto real está no servidor. O cliente recebe apenas um STUB,
+        //    que é uma referência remota, não uma cópia do objeto.
         IComputerService service = (IComputerService) Naming.lookup(ref.toUrl());
 
         // 3. Invoca o método no servidor. O Java RMI cuida do transporte.
-        //    Isso equivale a: serializar argumentos → enviar pela rede → executar →
-        //    serializar resultado → enviar de volta.
         Object result = dispatch(service, methodId, arguments);
 
         // 4. Serializa o resultado em JSON (representação externa de dados)
@@ -83,9 +66,7 @@ public class RequestReplyProtocol {
         return replyBytes;
     }
 
-    // =========================================================================
     // LADO SERVIDOR
-    // =========================================================================
 
     /**
      * Obtém uma requisição recebida de um cliente.
@@ -125,9 +106,7 @@ public class RequestReplyProtocol {
                            " bytes para [" + destino + "]");
     }
 
-    // =========================================================================
     // AUXILIAR — despacha a chamada para o método correto no serviço
-    // =========================================================================
 
     /**
      * Mapeia o nome do método (String) para a chamada tipada na interface remota.

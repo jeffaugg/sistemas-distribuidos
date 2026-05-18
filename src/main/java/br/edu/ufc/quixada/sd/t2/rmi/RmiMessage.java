@@ -4,15 +4,11 @@ import java.nio.charset.StandardCharsets;
 
 /**
  * Mensagem trocada entre cliente e servidor no protocolo requisição-resposta.
- *
- * Estrutura (seção 5.2 do livro Coulouris):
- * ┌─────────────────┬──────────────────────────────┐
  * │ messageType     │ 0 = Requisição, 1 = Resposta  │
  * │ requestId       │ número único da requisição    │
  * │ objectReference │ nome do objeto remoto         │
  * │ methodId        │ nome do método a invocar      │
  * │ arguments       │ argumentos em JSON (bytes)    │
- * └─────────────────┴──────────────────────────────┘
  */
 public class RmiMessage {
     public static final int TYPE_REQUEST = 0;

@@ -35,9 +35,7 @@ public class ComputerServiceImpl extends UnicastRemoteObject implements ICompute
         carregarDadosIniciais();
     }
 
-    // =========================================================================
     // Métodos remotos — chamados pelo cliente via stub
-    // =========================================================================
 
     @Override
     public List<Computer> listarComputadores() throws RemoteException {
@@ -66,12 +64,6 @@ public class ComputerServiceImpl extends UnicastRemoteObject implements ICompute
 
     /**
      * Adiciona um computador recebido como JSON.
-     *
-     * Demonstra PASSAGEM POR VALOR com REPRESENTAÇÃO EXTERNA DE DADOS (JSON):
-     *   - O cliente serializa o objeto Computer para JSON
-     *   - O JSON é enviado pela rede como array de bytes
-     *   - O servidor desserializa o JSON e reconstrói o objeto localmente
-     *   - As duas instâncias (cliente e servidor) são CÓPIAS INDEPENDENTES
      */
     @Override
     public void adicionarComputador(byte[] computerJson) throws RemoteException {
@@ -109,14 +101,10 @@ public class ComputerServiceImpl extends UnicastRemoteObject implements ICompute
         return removido;
     }
 
-    // =========================================================================
     // Auxiliares privados
-    // =========================================================================
 
     /**
      * Desserializa um Computer a partir de JSON.
-     * Usa o campo "categoria" para instanciar a subclasse correta.
-     * Isso é necessário porque Computer é abstrato.
      */
     @SuppressWarnings("unchecked")
     private Computer desserializarComputador(byte[] json) {
