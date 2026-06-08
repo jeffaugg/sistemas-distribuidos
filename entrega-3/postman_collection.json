@@ -1,0 +1,85 @@
+{
+  "info": {
+    "name": "Computadores API - Collection",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "version": "1.0.0"
+  },
+  "item": [
+    {
+      "name": "Listar computadores",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/computadores",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["api", "computadores"]
+        }
+      }
+    },
+    {
+      "name": "Buscar computador (ex: NB-001)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/computadores/NB-001",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["api", "computadores", "NB-001"]
+        }
+      }
+    },
+    {
+      "name": "Adicionar computador (ex: NB-999)",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"codigo\": \"NB-999\",\n  \"categoria\": \"Notebook\",\n  \"marca\": \"TestBrand\",\n  \"modelo\": \"TB-1\",\n  \"ramGb\": 8,\n  \"storageGb\": 256,\n  \"preco\": 1200.0\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/computadores",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["api", "computadores"]
+        }
+      }
+    },
+    {
+      "name": "Remover computador (ex: NB-999)",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/computadores/NB-999",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["api", "computadores", "NB-999"]
+        }
+      }
+    },
+    {
+      "name": "Contagem por categoria",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/computadores/stats/categoria",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["api", "computadores", "stats", "categoria"]
+        }
+      }
+    }
+  ]
+}

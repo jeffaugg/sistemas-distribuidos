@@ -1,0 +1,98 @@
+openapi: 3.0.3
+info:
+  title: Computadores API
+  version: 1.0.0
+  description: API REST para gerenciamento de computadores (Trabalho 2 reimplementado como REST).
+servers:
+  - url: http://localhost:8080
+paths:
+  /api/computadores:
+    get:
+      summary: Lista todos os computadores
+      responses:
+        '200':
+          description: Lista de computadores
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Computer'
+    post:
+      summary: Adiciona um novo computador
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Computer'
+      responses:
+        '201':
+          description: Criado
+  /api/computadores/{codigo}:
+    parameters:
+      - name: codigo
+        in: path
+        required: true
+        schema:
+          type: string
+    get:
+      summary: Busca computador por código
+      responses:
+        '200':
+          description: Computador encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Computer'
+        '404':
+          description: Não encontrado
+    delete:
+      summary: Remove computador por código
+      responses:
+        '204':
+          description: Removido com sucesso
+        '404':
+          description: Não encontrado
+  /api/computadores/stats/categoria:
+    get:
+      summary: Conta computadores por categoria
+      responses:
+        '200':
+          description: Mapa categoria → quantidade
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: integer
+components:
+  schemas:
+    Computer:
+      type: object
+      properties:
+        codigo:
+          type: string
+          example: NB-001
+        categoria:
+          type: string
+          example: Notebook
+        marca:
+          type: string
+          example: Dell
+        modelo:
+          type: string
+          example: Latitude 5520
+        ramGb:
+          type: integer
+          example: 16
+        storageGb:
+          type: integer
+          example: 512
+        preco:
+          type: number
+          format: double
+          example: 4500.0
+      required:
+        - codigo
+        - categoria
