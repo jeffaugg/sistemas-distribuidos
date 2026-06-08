@@ -1,64 +1,71 @@
-# Entrega 3 — Server REST e Clientes
+# Entrega 3 — Servidor REST e Clientes
 
-Conteúdo: implementação REST (server-rest) e clientes de exemplo em Python e Node.js.
+Reimplementação do catálogo de computadores como uma **API REST** (Spring Boot),
+com clientes de exemplo em Node.js e Python, especificação OpenAPI e coleção Postman.
 
-Requisitos:
-- Java 17+ e Maven para o server REST
-- Python 3.8+ e `requests` para o cliente Python
-- Node.js e `axios` para o cliente Node.js
-
-Server (build e run):
+## Como rodar com Docker
 
 ```bash
-# via Maven (recomendado)
-cd server-rest
-mvn -DskipTests package
-
-# executa o JAR gerado (ajuste o nome do JAR se necessário)
-java -jar target/*.jar
+cd entrega-3
+docker compose up --build
 ```
 
-Cliente Python (ex.: clientes em `entrega-3/clients/client-python`):
+O servidor sobe em `http://localhost:8080`. Para rodar em segundo plano use
+`docker compose up --build -d`; para parar, `docker compose down`.
+
+## Acesso a partir de outros computadores (via IP)
+
+O servidor escuta em todas as interfaces (`0.0.0.0`), e o container publica a porta
+`8080` no host. Outros computadores na mesma rede acessam pelo IP da máquina que está
+rodando o servidor:
+
+```
+http://<IP-do-host>:8080/api/computadores
+```
+
+Descubra o IP do host com `hostname -I` (Linux) ou `ipconfig` (Windows).
+
+Se a máquina host tiver firewall ativo (ex.: `ufw`), libere a porta:
 
 ```bash
-python3 -m venv .venv
-source .venv/bin/activate
+sudo ufw allow 8080/tcp
+```
+
+## Clientes de exemplo
+
+Os clientes usam `http://localhost:8080` por padrão, mas aceitam a variável de
+ambiente `API_URL` para apontar para outro host/IP.
+
+Python (requer `requests`):
+
+```bash
 pip install requests
-python entrega-3/clients/client-python/client.py
+python3 clients/client-python/client.py
+# apontando para outro host:
+API_URL="http://192.168.0.12:8080/api/computadores" python3 clients/client-python/client.py
 ```
 
-Cliente Node.js (ex.: `entrega-3/clients/client-node`):
+Node.js (requer `axios`):
 
 ```bash
-cd entrega-3/clients/client-node
-npm init -y
+cd clients/client-node
 npm install axios
 node index.js
+# apontando para outro host:
+API_URL="http://192.168.0.12:8080/api/computadores" node index.js
 ```
 
-Endpoints principais do servidor REST (exemplo):
-- `GET /api/computadores` — listar
-- `GET /api/computadores/{codigo}` — buscar
-- `POST /api/computadores` — adicionar (JSON)
-- `GET /api/computadores/stats/categoria` — contar por categoria
-- `DELETE /api/computadores/{codigo}` — remover
+## Endpoints
 
-OpenAPI / Postman:
+| Método | Rota | Descrição |
+|--------|------|-----------|
+| GET | `/api/computadores` | Lista todos |
+| GET | `/api/computadores/{codigo}` | Busca por código (404 se inexistente) |
+| POST | `/api/computadores` | Adiciona (201) |
+| DELETE | `/api/computadores/{codigo}` | Remove (204 / 404) |
+| GET | `/api/computadores/stats/categoria` | Contagem por categoria |
 
-- O arquivo OpenAPI (Swagger) está em `entrega-3/openapi.yaml` — importe em Swagger UI ou Swagger Editor.
-- A coleção Postman está em `entrega-3/postman_collection.json` — importe no Postman para testar as requisições.
+## OpenAPI / Postman
 
-Importante: os exemplos usam `http://localhost:8080` como servidor; ajuste a URL se o servidor estiver rodando em outra porta/host.
-# Entrega 3
-
-Conteúdo:
-
-- Servidor REST (server-rest module)
-- Clientes de exemplo em Python e Node.js (pasta clients)
-
-Como rodar os clientes de exemplo:
-
-- Python: instale `requests` e rode `python3 clients/client-python/client.py`
-- Node: instale `axios` (`npm install axios`) e rode `node clients/client-node/index.js`
-
-Obs: o servidor REST deve estar rodando em `http://localhost:8080`.
+- `openapi.yaml` — especificação OpenAPI 3.0; importe no Swagger UI ou Swagger Editor.
+- `postman_collection.json` — coleção Postman cobrindo as cinco operações.
