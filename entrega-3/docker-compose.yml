@@ -1,0 +1,7 @@
+services:
+  server-rest:
+    build: ./server-rest
+    container_name: entrega3-server-rest
+    ports:
+      - "8080:8080"
+    restart: unless-stopped
