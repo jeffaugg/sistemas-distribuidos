@@ -1,6 +1,8 @@
+import os
+
 import requests
 
-BASE_URL = "http://localhost:8080/api/computadores"
+BASE_URL = os.environ.get("API_URL", "http://localhost:8080/api/computadores")
 
 
 def listar():

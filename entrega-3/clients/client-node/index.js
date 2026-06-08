@@ -1,6 +1,6 @@
 const axios = require('axios');
 
-const BASE_URL = 'http://localhost:8080/api/computadores';
+const BASE_URL = process.env.API_URL || 'http://localhost:8080/api/computadores';
 
 async function listar() {
   const r = await axios.get(BASE_URL);
