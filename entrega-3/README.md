@@ -32,6 +32,22 @@ hostname -I | awk '{print $1}'
 Isso retorna o IP da rede local (ex.: `192.168.0.12`). Endereços `172.x.x.x` são
 redes internas do Docker e devem ser ignorados. No Windows, use `ipconfig`.
 
+### Alternativa mais simples: pelo nome da máquina (mDNS)
+
+Em vez do IP, dá para usar o hostname com o sufixo `.local`, que é estável (não muda
+quando o roteador troca o IP nem ao mudar de rede):
+
+```
+http://<hostname>:8080/api/computadores
+```
+
+Descubra o hostname com o comando `hostname` (ex.: o endereço fica
+`http://PE0EAJ5E.local:8080/api/computadores`). Funciona de outros computadores na
+mesma rede — macOS e Windows 10+ resolvem `.local` nativamente; no Linux é preciso o
+serviço avahi (mDNS) ativo.
+
+### Firewall
+
 Se a máquina host tiver firewall ativo (ex.: `ufw`), libere a porta:
 
 ```bash
