@@ -13,6 +13,14 @@ build/
 # Maven wrapper cache
 .mvn/wrapper/maven-wrapper.jar
 
+# Node.js (clientes de exemplo)
+node_modules/
+package-lock.json
+
+# Python (clientes de exemplo)
+.venv/
+__pycache__/
+
 # IDE/editor files
 .idea/
 *.iml
