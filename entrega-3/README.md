@@ -23,7 +23,14 @@ rodando o servidor:
 http://<IP-do-host>:8080/api/computadores
 ```
 
-Descubra o IP do host com `hostname -I` (Linux) ou `ipconfig` (Windows).
+Descubra o IP do host (no Linux) com:
+
+```bash
+hostname -I | awk '{print $1}'
+```
+
+Isso retorna o IP da rede local (ex.: `192.168.0.12`). Endereços `172.x.x.x` são
+redes internas do Docker e devem ser ignorados. No Windows, use `ipconfig`.
 
 Se a máquina host tiver firewall ativo (ex.: `ufw`), libere a porta:
 
